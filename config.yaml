@@ -1,0 +1,7 @@
+db:
+  monkey: 
+    host: 10.2.5.196
+    port: 3306
+    user: root
+    password: monkey_pass
+    db_name: monkey
