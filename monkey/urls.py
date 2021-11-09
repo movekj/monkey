@@ -20,4 +20,5 @@ from django.urls.conf import include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('asset/', include('backend.asset_app.urls')),
+    path('api/v1/task/', include('backend.task_app.urls')),
 ]
