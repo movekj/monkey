@@ -6,19 +6,8 @@
 
 <script>
 
-import Vue from 'vue';
-import ElementUI from 'element-ui';
-import router from './router' 
-
-
-import 'element-ui/lib/theme-chalk/index.css';
-
-Vue.use(ElementUI);
-
-
 export default {
   name: 'App',
-  router,
   components: {
   }
 }

@@ -11,9 +11,13 @@ from .handlers import *
 class JobView(APIView):
 
     def get(self, request, *args, **kwargs):
-        resp = job.Job(request).get_jobs()
+        resp = job.Job(request).get_job(request.query_params)
         return JsonResponse(resp)
 
     def post(self, request, *args, **kwargs):
         resp = job.Job(request).create_job(request.data)
+        return JsonResponse(resp)
+
+    def put(self, request, *args, **kwargs):
+        resp = job.Job(request).update_job(request.data)
         return JsonResponse(resp)

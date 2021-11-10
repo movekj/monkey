@@ -2,66 +2,92 @@
   <div>
     <el-card>
       <div slot="header" class="clearfix">
-        <span>卡片名称</span>
+        <span>作业列表</span>
         <el-button 
           style="float: right; padding: 3px 0" 
           type="text" 
-          @click="jobAddVisible=true"
+          @click="addJob"
         >添加作业</el-button>
       </div>
       <el-table
-        :data="tableData"
+        :data="jobList"
         style="width: 100%">
         <el-table-column
-          prop="date"
-          label="日期"
-          width="180">
-        </el-table-column>
-        <el-table-column
           prop="name"
-          label="姓名"
-          width="180">
+          label="名称">
         </el-table-column>
         <el-table-column
-          prop="address"
-          label="地址">
+          prop="typ"
+          label="类型">
+        </el-table-column>
+        <el-table-column
+          prop="create_time"
+          label="创建时间">
+        </el-table-column>
+        <el-table-column
+          prop="status"
+          label="状态">
+        </el-table-column>
+        <el-table-column
+          label="操作">
+          <template slot-scope="scope">
+            <el-button @click="showJobDetail(scope.row)" type="text">查看</el-button>
+            <el-button @click="editJob(scope.row)" type="text">编辑</el-button>
+            <el-button type="text">历史</el-button>
+            <el-button type="text">删除</el-button>
+          </template>
         </el-table-column>
       </el-table>
     </el-card>
-    <jobAddDialog v-bind:visible.sync="jobAddVisible"></jobAddDialog>
+    <jobDialog 
+      @listJobs="listJobs" 
+      v-if="jobAddVisible"
+      v-bind:operate_typ='operate_typ'
+      v-bind:job_id='job_id'
+      v-bind:visible.sync="jobAddVisible"></jobDialog>
   </div>
 </template>
 <script>
-import jobAddDialog from './jobAddDialog'
+import JobDialog from './JobDialog'
 
 export default {
   name: 'Job',
   data() {
     return {
+      jobList: [],
+      operate_typ: '',
       jobAddVisible: false,
-      tableData: [{
-        date: '2016-05-02',
-        name: '王小虎',
-        address: '上海市普陀区金沙江路 1518 弄'
-      }, {
-        date: '2016-05-04',
-        name: '王小虎',
-        address: '上海市普陀区金沙江路 1517 弄'
-      }, {
-        date: '2016-05-01',
-        name: '王小虎',
-        address: '上海市普陀区金沙江路 1519 弄'
-      }, {
-        date: '2016-05-03',
-        name: '王小虎',
-        address: '上海市普陀区金沙江路 1516 弄'
-      }]
+      job_id: ''
+    }
+  },
+  mounted(){
+
+    this.listJobs()
+  },
+  methods: {
+    listJobs(){
+      this.axios.get('/api/v1/task/job/').then(resp => {
+        this.jobList = resp.data.data
+      })
+    },
+    addJob(){
+      this.operate_typ = 'add'
+      this.jobAddVisible = true
+    },
+    editJob(row){
+      this.operate_typ = 'edit'
+      this.job_id = row.id
+      this.jobAddVisible  = true
+    },
+    showJobDetail(row){
+      this.operate_typ = 'show'
+      this.job_id = row.id
+      this.jobAddVisible = true
     }
   },
   components: {
-    jobAddDialog
+    JobDialog
   }
-
 }
 </script>
 

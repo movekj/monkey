@@ -12,9 +12,11 @@
     "@fortawesome/free-brands-svg-icons": "^5.15.4",
     "@fortawesome/free-solid-svg-icons": "^5.15.4",
     "@fortawesome/vue-fontawesome": "^2.0.6",
+    "axios": "^0.24.0",
     "core-js": "^3.6.5",
     "element-ui": "^2.14.1",
     "vue": "^2.6.11",
+    "vue-axios": "^3.4.0",
     "vue-codemirror": "^4.0.6",
     "vue-router": "^3.5.3"
   },
